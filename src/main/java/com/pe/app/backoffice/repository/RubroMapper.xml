@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.pe.app.backoffice.repository.RubroMapper">
+
+	<resultMap id="listarRubroMapeo"
+		type="com.pe.app.backoffice.model.response.ListarRubroResponse">
+	</resultMap>
+
+	<select id="listarRubro" timeout="60"
+		resultMap="listarRubroMapeo"
+		parameterType="com.pe.app.backoffice.model.request.RubroRequest"
+		statementType="CALLABLE">
+		{call general.paRubroListaDatos(
+			#{rubro , 			jdbcType=VARCHAR, mode=IN}, 
+			#{nroPage, 			jdbcType=INTEGER, mode=IN},
+   		    #{totalFilasPorPage, jdbcType=INTEGER, mode=IN},
+   		    #{totalFilas, 		jdbcType=INTEGER, mode=OUT},
+   		    #{totalPages, 		jdbcType=INTEGER, mode=OUT},  
+       		#{resultado, 		jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, 			jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+
+	<resultMap id="procesaRubroMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaRubroResponse">
+
+	</resultMap>
+
+	<select id="procesaRubro" timeout="180"
+		resultMap="procesaRubroMapeo"
+		parameterType="com.pe.app.backoffice.model.request.RubroRequest"
+		statementType="CALLABLE">
+		{call general.paRubroProcesa(
+			#{tipoaccion 		, jdbcType=INTEGER, mode=IN},
+			#{idrubro 			, jdbcType=INTEGER, mode=IN},
+			#{idcatalogo 		, jdbcType=INTEGER, mode=IN},
+			#{idusuario			, jdbcType=INTEGER, mode=IN},
+			#{resultado			, jdbcType=INTEGER, mode=OUT},
+			#{mensaje			, jdbcType=VARCHAR, mode=OUT}
+			)
+		}
+	</select>
+	
+	<resultMap id="eliminarRubroMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarRubroResponse">
+
+	</resultMap>
+
+	<select id="eliminarRubro" timeout="180"
+		resultMap="eliminarRubroMapeo"
+		parameterType="com.pe.app.backoffice.model.request.RubroRequest"
+		statementType="CALLABLE">
+		{call general.paRubroElimina
+		(
+			#{idrubro , jdbcType=INTEGER, mode=IN},
+			#{idusuario , jdbcType=INTEGER, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="listarRubroUnidadMedidaMapeo"
+		type="com.pe.app.backoffice.model.response.ListarRubroUnidadMedidaResponse">
+	</resultMap>
+
+	<select id="listarRubroUnidadMedida" timeout="60"
+		resultMap="listarRubroUnidadMedidaMapeo"
+		parameterType="com.pe.app.backoffice.model.request.RubroRequest"
+		statementType="CALLABLE">
+		{call general.paRubroUnidadMedidaListaDatos(
+			#{idrubro , 		jdbcType=INTEGER, mode=IN},
+			#{nombre , 			jdbcType=VARCHAR, mode=IN}, 
+			#{nroPage, 			jdbcType=INTEGER, mode=IN},
+   		    #{totalFilasPorPage, jdbcType=INTEGER, mode=IN},
+   		    #{totalFilas, 		jdbcType=INTEGER, mode=OUT},
+   		    #{totalPages, 		jdbcType=INTEGER, mode=OUT},  
+			#{resultado, 		jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 			jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+	<resultMap id="listarRubroUnidadMedidaxRubroMapeo"
+		type="com.pe.app.backoffice.model.response.ListarRubroUnidadMedidaResponse">
+	</resultMap>
+
+	<select id="listarRubroUnidadMedidaxRubro" timeout="60"
+		resultMap="listarRubroUnidadMedidaxRubroMapeo"
+		parameterType="com.pe.app.backoffice.model.request.RubroRequest"
+		statementType="CALLABLE">
+		{call general.paRubroUnidadMedidaListaDatosxRubro(
+			#{crubro_usuario , 		jdbcType=INTEGER, mode=IN},
+			#{resultado, 	jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 		jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+
+	<resultMap id="procesaRubroUnidadMedidaMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaRubroResponse">
+	</resultMap>
+
+	<select id="procesaRubroUnidadMedida" timeout="180"
+		resultMap="procesaRubroUnidadMedidaMapeo"
+		parameterType="com.pe.app.backoffice.model.request.RubroRequest"
+		statementType="CALLABLE">
+		{call general.paRubroUnidadMedidaProcesa
+		(
+			#{tipoaccion 				, jdbcType=INTEGER, mode=IN},
+			#{idrubrounidadmedida 		, jdbcType=INTEGER, mode=IN},
+			#{idrubro 					, jdbcType=INTEGER, mode=IN},
+			#{idunidadmedida 			, jdbcType=INTEGER, mode=IN},
+			#{cantidad 					, jdbcType=INTEGER, mode=IN},
+			#{idusuario					, jdbcType=INTEGER, mode=IN},
+			#{resultado					, jdbcType=INTEGER, mode=OUT},
+			#{mensaje					, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="eliminarRubroUnidadMedidaMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarRubroResponse">
+
+	</resultMap>
+
+	<select id="eliminarRubroUnidadMedida" timeout="180"
+		resultMap="eliminarRubroUnidadMedidaMapeo"
+		parameterType="com.pe.app.backoffice.model.request.RubroRequest"
+		statementType="CALLABLE">
+		{call general.paRubroUnidadMedidaElimina
+		(
+			#{idrubrounidadmedida , jdbcType=INTEGER, mode=IN},
+			#{idusuario , jdbcType=INTEGER, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+
+	<resultMap id="listarRubroCaracteristicaMapeo"
+		type="com.pe.app.backoffice.model.response.ListarRubroCaracteristicaResponse">
+	</resultMap>
+
+	<select id="listarRubroCaracteristica" timeout="60"
+		resultMap="listarRubroCaracteristicaMapeo"
+		parameterType="com.pe.app.backoffice.model.request.RubroRequest"
+		statementType="CALLABLE">
+		{call general.paRubroCaracteristicaListaDatos(
+			#{idrubro , jdbcType=INTEGER, mode=IN},
+			#{nombre , jdbcType=VARCHAR, mode=IN}, 
+			#{nroPage, jdbcType=INTEGER, mode=IN},
+   		    #{totalFilasPorPage, jdbcType=INTEGER, mode=IN},
+   		    #{totalFilas, jdbcType=INTEGER, mode=OUT},
+   		    #{totalPages, jdbcType=INTEGER, mode=OUT},  
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+
+	<resultMap id="procesaRubroCaracteristicaMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaRubroResponse">
+
+	</resultMap>
+
+	<select id="procesaRubroCaracteristica" timeout="180"
+		resultMap="procesaRubroCaracteristicaMapeo"
+		parameterType="com.pe.app.backoffice.model.request.RubroRequest"
+		statementType="CALLABLE">
+		{call general.paRubroCaracteristicaProcesa
+		(
+			#{tipoaccion 				, jdbcType=INTEGER, mode=IN},
+			#{idrubrocaracteristica 	, jdbcType=INTEGER, mode=IN},
+			#{idrubro 					, jdbcType=INTEGER, mode=IN},
+			#{idcaracteristica 			, jdbcType=INTEGER, mode=IN},
+			#{idusuario					, jdbcType=INTEGER, mode=IN},
+			#{resultado					, jdbcType=INTEGER, mode=OUT},
+			#{mensaje					, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="eliminarRubroCaracteristicaMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarRubroResponse">
+
+	</resultMap>
+
+	<select id="eliminarRubroCaracteristica" timeout="180"
+		resultMap="eliminarRubroCaracteristicaMapeo"
+		parameterType="com.pe.app.backoffice.model.request.RubroRequest"
+		statementType="CALLABLE">
+		{call general.paRubroCaracteristicaElimina
+		(
+			#{idrubrocaracteristica , jdbcType=INTEGER, mode=IN},
+			#{idusuario , jdbcType=INTEGER, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="listarRubroCaracteristicaDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.ListarRubroCaracteristicaDetalleResponse">
+	</resultMap>
+
+	<select id="listarRubroCaracteristicaDetalle" timeout="60"
+		resultMap="listarRubroCaracteristicaDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.RubroRequest"
+		statementType="CALLABLE">
+		{call general.paRubroCaracteristicaDetalleListaDatos(
+			#{idrubrocaracteristica , jdbcType=INTEGER, mode=IN},
+			#{nombre , jdbcType=VARCHAR, mode=IN}, 
+			#{nroPage, jdbcType=INTEGER, mode=IN},
+   		    #{totalFilasPorPage, jdbcType=INTEGER, mode=IN},
+   		    #{totalFilas, jdbcType=INTEGER, mode=OUT},
+   		    #{totalPages, jdbcType=INTEGER, mode=OUT},  
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+	<resultMap id="listarRubroCaracteristicaDetalleRubroMapeo"
+		type="com.pe.app.backoffice.model.response.ListarRubroCaracteristicaDetalleResponse">
+	</resultMap>
+
+	<select id="listarRubroCaracteristicaDetalleRubro" timeout="60"
+		resultMap="listarRubroCaracteristicaDetalleRubroMapeo"
+		parameterType="com.pe.app.backoffice.model.request.RubroRequest"
+		statementType="CALLABLE">
+		{call general.paRubroCaracteristicaDetalleListaDatosxRubro(
+			#{crubro, jdbcType=INTEGER, mode=IN},
+			#{abreviatura , jdbcType=VARCHAR, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+
+	<resultMap id="procesaRubroCaracteristicaDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaRubroResponse">
+
+	</resultMap>
+
+	<select id="procesaRubroCaracteristicaDetalle" timeout="180"
+		resultMap="procesaRubroCaracteristicaDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.RubroRequest"
+		statementType="CALLABLE">
+		{call general.paRubroCaracteristicaDetalleProcesa
+		(
+			#{tipoaccion 				, jdbcType=INTEGER, mode=IN},
+			#{idrubrocaracteristicadetalle 	, jdbcType=INTEGER, mode=IN},
+			#{idrubrocaracteristica 	, jdbcType=INTEGER, mode=IN},
+			#{nombre 					, jdbcType=VARCHAR, mode=IN},
+			#{idusuario					, jdbcType=INTEGER, mode=IN},
+			#{resultado					, jdbcType=INTEGER, mode=OUT},
+			#{mensaje					, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="eliminarRubroCaracteristicaDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarRubroResponse">
+
+	</resultMap>
+
+	<select id="eliminarRubroCaracteristicaDetalle" timeout="180"
+		resultMap="eliminarRubroCaracteristicaDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.RubroRequest"
+		statementType="CALLABLE">
+		{call general.paRubroCaracteristicaDetalleElimina
+		(
+			#{idrubrocaracteristicadetalle , jdbcType=INTEGER, mode=IN},
+			#{idusuario , jdbcType=INTEGER, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+</mapper>

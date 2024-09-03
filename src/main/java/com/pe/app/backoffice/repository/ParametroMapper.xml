@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.pe.app.backoffice.repository.ParametroMapper">
+
+	<resultMap id="verificarParametroMapeo"
+		type="com.pe.app.backoffice.model.response.VerificaParametroResponse">
+	</resultMap>
+
+	<select id="verificarParametroxAbreviatura" timeout="60"
+		resultMap="verificarParametroMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ParametroRequest"
+		statementType="CALLABLE">
+		{call general.paParametroVerificaxAbreviatura(
+			#{abreviatura , 	jdbcType=VARCHAR, mode=IN},
+			#{resultado, 		jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 			jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+</mapper>

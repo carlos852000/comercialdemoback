@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pe.app.backoffice.repository.SistemaMapper">
+
+	<resultMap id="accesoMapeo"
+		type="com.pe.app.backoffice.model.response.AccesoResponse">
+	</resultMap>
+
+	<select id="procesaAcceso" timeout="60"
+		resultMap="accesoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.AccesoRequest"
+		statementType="CALLABLE">
+		{call seguridad.paAccesoProcesa(
+			#{idperfil , jdbcType=INTEGER, mode=IN}, 
+			#{idopcion , jdbcType=INTEGER, mode=IN}, 
+			#{accion , jdbcType=INTEGER, mode=IN}, 
+			#{idusuario , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="ProcesarAccesoBotonMapeo"
+		type="com.pe.app.backoffice.model.response.AccesoResponse">
+	</resultMap>
+
+	<select id="ProcesarAccesoBoton" timeout="60"
+		resultMap="ProcesarAccesoBotonMapeo"
+		parameterType="com.pe.app.backoffice.model.request.OpcionAccesoBotonRequest"
+		statementType="CALLABLE">
+		{call seguridad.paAccesoBotonProcesa(
+			#{idacceso , jdbcType=INTEGER, mode=IN}, 
+			#{idopcionboton , jdbcType=INTEGER, mode=IN}, 
+			#{accion , jdbcType=INTEGER, mode=IN}, 
+			#{idusuario , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="VerificarAccesoMapeo"
+		type="com.pe.app.backoffice.model.response.VerificaAccesoResponse">
+	</resultMap>
+
+	<select id="VerificarAcceso" timeout="60"
+		resultMap="VerificarAccesoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.VerificarAccesoRequest"
+		statementType="CALLABLE">
+		{call seguridad.paAccesoVerifica(
+			#{idopcion, jdbcType=INTEGER, mode=IN}, 
+			#{idperfil, jdbcType=INTEGER, mode=IN},
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="VerificarAccesoBotonMapeo"
+		type="com.pe.app.backoffice.model.response.VerificaAccesoBotonSistResponse">
+	</resultMap>
+
+	<select id="VerificarAccesoBoton" timeout="60"
+		resultMap="VerificarAccesoBotonMapeo"
+		parameterType="com.pe.app.backoffice.model.request.VerificarAccesoBotonRequest"
+		statementType="CALLABLE">
+		{call seguridad.paAccesoBotonVerifica(
+			#{idacceso, jdbcType=INTEGER, mode=IN}, 
+			#{idopcionboton, jdbcType=INTEGER, mode=IN},
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="opcionesaccesoMapeo"
+		type="com.pe.app.backoffice.model.response.ListaOpcionesAccesoResponse">
+	</resultMap>
+
+	<select id="listaOpcionesAcceso" timeout="60"
+		resultMap="opcionesaccesoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.OpcionPerfilRequest"
+		statementType="CALLABLE">
+		{call seguridad.paOpcionAccesosListaDatos(
+			#{idsistema , jdbcType=INTEGER, mode=IN}, 
+			#{idperfil , jdbcType=INTEGER, mode=IN},
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="ListarBotonesMapeo"
+		type="com.pe.app.backoffice.model.response.ListaBotonesAccesoResponse">
+	</resultMap>
+
+	<select id="ListarBotones" timeout="60"
+		resultMap="ListarBotonesMapeo"
+		parameterType="com.pe.app.backoffice.model.request.BotonAccesoRequest"
+		statementType="CALLABLE">
+		{call seguridad.paOpcionBotonListaDatos(
+			#{idopcion , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="ProcesarOpcionBotonMapeo"
+		type="com.pe.app.backoffice.model.response.OpcionBotonResponse">
+	</resultMap>
+
+	<select id="ProcesarOpcionBoton" timeout="60"
+		resultMap="ProcesarOpcionBotonMapeo"
+		parameterType="com.pe.app.backoffice.model.request.OpcionBotonRequest"
+		statementType="CALLABLE">
+		{call seguridad.paOpcionBotonProcesa(
+			#{tipoaccion , jdbcType=INTEGER, mode=IN}, 
+			#{idopcion , jdbcType=INTEGER, mode=IN}, 
+			#{idboton , jdbcType=INTEGER, mode=IN}, 
+			#{boton , jdbcType=VARCHAR, mode=IN}, 
+			#{idusuario , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="EliminarOpcionBotonMapeo"
+		type="com.pe.app.backoffice.model.response.OpcionBotonResponse">
+	</resultMap>
+
+	<select id="EliminarOpcionBoton" timeout="60"
+		resultMap="EliminarOpcionBotonMapeo"
+		parameterType="com.pe.app.backoffice.model.request.OpcionBotonRequest"
+		statementType="CALLABLE">
+		{call seguridad.paOpcionBotonElimina(
+			#{idboton , jdbcType=INTEGER, mode=IN}, 
+			#{idusuario , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="eliminaropcionMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarOpcionResponse">
+	</resultMap>
+
+	<select id="EliminarOpcion" timeout="60"
+		resultMap="eliminaropcionMapeo"
+		parameterType="com.pe.app.backoffice.model.request.OpcionRequest"
+		statementType="CALLABLE">
+		{call seguridad.paOpcionElimina(
+			#{idopcion , jdbcType=INTEGER, mode=IN}, 
+			#{idusuario , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="listaropcionesMapeo"
+		type="com.pe.app.backoffice.model.response.ListaOpcionesAccesoResponse">
+	</resultMap>
+
+	<select id="ListarOpciones" timeout="60"
+		resultMap="listaropcionesMapeo"
+		parameterType="com.pe.app.backoffice.model.request.OpcionRequest"
+		statementType="CALLABLE">
+		{call seguridad.paOpcionListaDatos(
+			#{idsistema , jdbcType=INTEGER, mode=IN}, 
+			#{nombre , jdbcType=VARCHAR, mode=IN}, 
+			#{nroPage, jdbcType=INTEGER, mode=IN},
+   		    #{totalFilasPorPage, jdbcType=INTEGER, mode=IN},
+   		    #{totalFilas, jdbcType=INTEGER, mode=OUT},
+   		    #{totalPages, jdbcType=INTEGER, mode=OUT},  
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="ObtenerMenuMapeo"
+		type="com.pe.app.backoffice.model.response.ListaOpcionesAccesoResponse">
+	</resultMap>
+
+	<select id="ObtenerMenu" timeout="60"
+		resultMap="ObtenerMenuMapeo"
+		parameterType="com.pe.app.backoffice.model.request.OpcionRequest"
+		statementType="CALLABLE">
+		{call seguridad.paOpcionLista(
+			#{idmodulo , jdbcType=INTEGER, mode=IN}, 
+			#{idopcionpadre , jdbcType=INTEGER, mode=IN}, 
+			#{veropcion , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="OrdenarOpcionMapeo"
+		type="com.pe.app.backoffice.model.response.OpcionResponse">
+	</resultMap>
+
+	<select id="OrdenarOpcion" timeout="60"
+		resultMap="OrdenarOpcionMapeo"
+		parameterType="com.pe.app.backoffice.model.request.OpcionRequest"
+		statementType="CALLABLE">
+		{call seguridad.paOpcionOrdena(
+			#{idopcion , jdbcType=INTEGER, mode=IN},
+			#{tipoorden , jdbcType=INTEGER, mode=IN}, 
+			#{idusuario , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="ProcesarOpcionMapeo"
+		type="com.pe.app.backoffice.model.response.OpcionResponse">
+	</resultMap>
+
+	<select id="ProcesarOpcion" timeout="60"
+		resultMap="ProcesarOpcionMapeo"
+		parameterType="com.pe.app.backoffice.model.request.OpcionRequest"
+		statementType="CALLABLE">
+		{call seguridad.paOpcionProcesa(
+			#{tipoaccion , jdbcType=INTEGER, mode=IN},
+			#{idopcion , jdbcType=INTEGER, mode=IN}, 
+			#{idmodulo , jdbcType=INTEGER, mode=IN}, 
+			#{idpadre , jdbcType=INTEGER, mode=IN}, 
+			#{idopcionpadre , jdbcType=INTEGER, mode=IN}, 
+			#{habilitador , jdbcType=INTEGER, mode=IN}, 
+			#{icono , jdbcType=VARCHAR, mode=IN}, 
+			#{nombre , jdbcType=VARCHAR, mode=IN}, 
+			#{abreviatura , jdbcType=VARCHAR, mode=IN},
+			#{enlace , jdbcType=VARCHAR, mode=IN}, 
+			#{destino , jdbcType=INTEGER, mode=IN}, 
+			#{veropcion , jdbcType=INTEGER, mode=IN}, 
+			#{idusuario , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="EliminarPerfilMapeo"
+		type="com.pe.app.backoffice.model.response.PerfilResponse">
+	</resultMap>
+
+	<select id="EliminarPerfil" timeout="60"
+		resultMap="EliminarPerfilMapeo"
+		parameterType="com.pe.app.backoffice.model.request.PerfilRequest"
+		statementType="CALLABLE">
+		{call seguridad.paPerfilElimina(
+			#{idperfil , jdbcType=INTEGER, mode=IN}, 
+			#{idusuario , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="ListarPerfilMapeo"
+		type="com.pe.app.backoffice.model.response.ListaPerfilResponse">
+	</resultMap>
+
+	<select id="ListarPerfil" timeout="60"
+		resultMap="ListarPerfilMapeo"
+		parameterType="com.pe.app.backoffice.model.request.PerfilRequest"
+		statementType="CALLABLE">
+		{call seguridad.paPerfilListaDatos(
+			#{idsistema , jdbcType=INTEGER, mode=IN}, 
+			#{nombre , jdbcType=VARCHAR, mode=IN}, 
+			#{nroPage, jdbcType=INTEGER, mode=IN},
+   		    #{totalFilasPorPage, jdbcType=INTEGER, mode=IN},
+   		    #{totalFilas, jdbcType=INTEGER, mode=OUT},
+   		    #{totalPages, jdbcType=INTEGER, mode=OUT},  
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="ProcesarPerfilMapeo"
+		type="com.pe.app.backoffice.model.response.PerfilResponse">
+	</resultMap>
+
+	<select id="ProcesarPerfil" timeout="60"
+		resultMap="ProcesarPerfilMapeo"
+		parameterType="com.pe.app.backoffice.model.request.PerfilRequest"
+		statementType="CALLABLE">
+		{call seguridad.paPerfilProcesa(
+			#{tipoaccion , jdbcType=INTEGER, mode=IN}, 
+			#{idperfil , jdbcType=INTEGER, mode=IN}, 
+			#{idmodulo , jdbcType=INTEGER, mode=IN}, 
+			#{nombre , jdbcType=VARCHAR, mode=IN}, 
+			#{idusuario , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="VerificarSistemaMapeo"
+		type="com.pe.app.backoffice.model.response.ListaSistemaResponse">
+	</resultMap>
+
+	<select id="VerificarSistema" timeout="60"
+		resultMap="VerificarSistemaMapeo"
+		parameterType="com.pe.app.backoffice.model.request.SistemaRequest"
+		statementType="CALLABLE">
+		{call seguridad.paSistemaObtieneDatos(
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="ProcesarSistemaMapeo"
+		type="com.pe.app.backoffice.model.response.SistemaResponse">
+	</resultMap>
+
+	<select id="ProcesarSistema" timeout="60"
+		resultMap="ProcesarSistemaMapeo"
+		parameterType="com.pe.app.backoffice.model.request.SistemaRequest"
+		statementType="CALLABLE">
+		{call seguridad.paSistemaProcesa(
+			#{idsistema, jdbcType=INTEGER, mode=IN},
+			#{nombre, jdbcType=VARCHAR, mode=IN},
+			#{abreviatura, jdbcType=VARCHAR, mode=IN},
+			#{version, jdbcType=VARCHAR, mode=IN},
+			#{enlace, jdbcType=VARCHAR, mode=IN},
+			#{idusuario, jdbcType=INTEGER, mode=IN},
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="CambiarClaveMapeo"
+		type="com.pe.app.backoffice.model.response.UsuarioResponse">
+	</resultMap>
+
+	<select id="CambiarClave" timeout="60"
+		resultMap="CambiarClaveMapeo"
+		parameterType="com.pe.app.backoffice.model.request.UsuarioRequest"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioCambiaClaveLocal(
+			#{idusuariosistema, jdbcType=INTEGER, mode=IN},
+			#{nuevaclave, jdbcType=VARCHAR, mode=IN},
+			#{idusuario, jdbcType=INTEGER, mode=IN},
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="EliminarUsuarioMapeo"
+		type="com.pe.app.backoffice.model.response.UsuarioResponse">
+	</resultMap>
+
+	<select id="EliminarUsuario" timeout="60"
+		resultMap="EliminarUsuarioMapeo"
+		parameterType="com.pe.app.backoffice.model.request.UsuarioRequest"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioElimina(
+			#{idusuariosistema, jdbcType=INTEGER, mode=IN},
+			#{idusuario, jdbcType=INTEGER, mode=IN},
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="ListarUsuarioPerfilMapeo"
+		type="com.pe.app.backoffice.model.response.ListaUsuarioPersonaPerfilResponse">
+	</resultMap>
+
+	<select id="ListarUsuarioPerfil" timeout="60"
+		resultMap="ListarUsuarioPerfilMapeo"
+		parameterType="com.pe.app.backoffice.model.request.UsuarioRequest"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioPerfilListaDatos(
+			#{idperfil, jdbcType=INTEGER, mode=IN},
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="ListarUsuarioMapeo"
+		type="com.pe.app.backoffice.model.response.ListaUsuarioPersonaPerfilResponse">
+	</resultMap>
+
+	<select id="ListarUsuario" timeout="60"
+		resultMap="ListarUsuarioMapeo"
+		parameterType="com.pe.app.backoffice.model.request.UsuarioRequest"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioListaDatos(
+			#{nrodocumentousuario, jdbcType=VARCHAR, mode=IN},
+			#{nombreusuario, jdbcType=VARCHAR, mode=IN},
+			#{nroPage, jdbcType=INTEGER, mode=IN},
+   		    #{totalFilasPorPage, jdbcType=INTEGER, mode=IN},
+   		    #{totalFilas, jdbcType=INTEGER, mode=OUT},
+   		    #{totalPages, jdbcType=INTEGER, mode=OUT},  
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="ProcesarUsuarioMapeo"
+		type="com.pe.app.backoffice.model.response.UsuarioResponse">
+	</resultMap>
+
+	<select id="ProcesarUsuario" timeout="60"
+		resultMap="ProcesarUsuarioMapeo"
+		parameterType="com.pe.app.backoffice.model.request.UsuarioRequest"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioProcesa(
+			#{tipoaccion, jdbcType=INTEGER, mode=IN},
+			#{idsistema, jdbcType=INTEGER, mode=IN},
+			#{idperfil, jdbcType=INTEGER, mode=IN},
+			#{idusuariosistema, jdbcType=INTEGER, mode=IN},
+			#{idpersonasistema, jdbcType=INTEGER, mode=IN},
+			#{idtipodocumentousuario, jdbcType=INTEGER, mode=IN},
+			#{nrodocumentousuario, jdbcType=VARCHAR, mode=IN},
+			#{apellidopaternousuario, jdbcType=VARCHAR, mode=IN},
+			#{apellidomaternousuario, jdbcType=VARCHAR, mode=IN},
+			#{nombreusuario, jdbcType=VARCHAR, mode=IN},
+			#{nuevaclave, jdbcType=VARCHAR, mode=IN},
+			#{idsexousuario, jdbcType=INTEGER, mode=IN},
+			#{emailusuario, jdbcType=VARCHAR, mode=IN},
+			#{idtienda, jdbcType=INTEGER, mode=IN},
+			#{idusuario, jdbcType=INTEGER, mode=IN},
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="BuscarUsuarioxDNIMapeo"
+		type="com.pe.app.backoffice.model.response.UsuarioResponse">
+	</resultMap>
+
+	<select id="BuscarUsuarioxDNI" timeout="60"
+		resultMap="BuscarUsuarioxDNIMapeo"
+		parameterType="com.pe.app.backoffice.model.request.UsuarioRequest"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioBuscarxDni(
+			#{idtipodocumentousuario, jdbcType=INTEGER, mode=IN},
+			#{nrodocumentousuario, jdbcType=VARCHAR, mode=IN},
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="VerificarUsuarioPerfilMapeo"
+		type="com.pe.app.backoffice.model.response.VerificaUsuarioPerfilResponse">
+	</resultMap>
+
+	<select id="VerificarUsuarioPerfil" timeout="60"
+		resultMap="VerificarUsuarioPerfilMapeo"
+		parameterType="com.pe.app.backoffice.model.request.VerificaUsuarioPerfilRequest"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioPerfilVerifica(
+			#{idusuariosistema, jdbcType=INTEGER, mode=IN},
+			#{idperfil, jdbcType=INTEGER, mode=IN},
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="ProcesarUsuarioPerfilMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaUsuarioPerfilResponse">
+	</resultMap>
+
+	<select id="ProcesarUsuarioPerfil" timeout="60"
+		resultMap="ProcesarUsuarioPerfilMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProcesaUsuarioPerfilRequest"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioPerfilProcesa(
+			#{idperfil , jdbcType=INTEGER, mode=IN}, 
+			#{idusuariosistema , jdbcType=INTEGER, mode=IN}, 
+			#{accion , jdbcType=INTEGER, mode=IN}, 
+			#{idusuario , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+</mapper>

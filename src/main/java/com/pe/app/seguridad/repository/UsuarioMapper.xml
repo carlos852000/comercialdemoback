@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pe.app.seguridad.repository.UsuarioMapper">
+
+	<resultMap id="loginUsuarioMap"
+		type="com.pe.app.seguridad.model.response.LoginUsuarioResponse">
+	</resultMap>
+
+	<select id="loginUsuario" timeout="60" resultMap="loginUsuarioMap"
+		parameterType="com.pe.app.seguridad.model.request.LoginUsuarioRequest"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioVerificaLoguin
+		(
+			#{username, jdbcType=VARCHAR, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="obtieneInfoUsuarioMap"
+		type="com.pe.app.seguridad.model.response.ObtieneInfoUsuarioResponse">
+	</resultMap>
+
+	<select id="obtieneInfoUsuario" timeout="60" resultMap="obtieneInfoUsuarioMap"
+		parameterType="com.pe.app.seguridad.model.request.UsuarioAuditoriaDto"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioObtieneDatos
+		(
+			#{usuarioauditoria, jdbcType=VARCHAR, mode=IN},
+			#{resultado,jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+
+	</select>
+
+</mapper>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.pe.app.backoffice.repository.ClienteMapper">
+
+	<resultMap id="buscarClienteMapeo"
+		type="com.pe.app.backoffice.model.response.ListarClienteResponse">
+	</resultMap>
+
+	<select id="buscarCliente" timeout="60"
+	resultMap="buscarClienteMapeo"
+	parameterType="com.pe.app.backoffice.model.request.ClienteRequest"
+	statementType="CALLABLE">
+	{call comercial.paClienteBuscarxDni(
+	#{idTipoDocumentoCliente , 	jdbcType=INTEGER, mode=IN},
+	#{nroDocumentoCliente , 	jdbcType=VARCHAR, mode=IN},
+	#{resultado, 				jdbcType=INTEGER, mode=OUT},
+	#{mensaje, 					jdbcType=VARCHAR, mode=OUT}
+	)}
+</select>
+	
+	<resultMap id="buscarCliente02Mapeo"
+		type="com.pe.app.backoffice.model.response.ListarClienteResponse">
+	</resultMap>
+
+	<select id="buscarCliente02" timeout="60"
+		resultMap="buscarCliente02Mapeo"
+		parameterType="com.pe.app.backoffice.model.request.ClienteRequest"
+		statementType="CALLABLE">
+		{call comercial.paClienteBuscarxDni02(
+			#{idTipoDocumentoCliente , 	jdbcType=INTEGER, mode=IN},
+			#{nroDocumentoCliente , 	jdbcType=VARCHAR, mode=IN},
+			#{resultado,				jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 					jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+	<resultMap id="listarClienteMapeo"
+		type="com.pe.app.backoffice.model.response.ListarClienteResponse">
+	</resultMap>
+
+	<select id="listarCliente" timeout="60"
+		resultMap="listarClienteMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ClienteRequest"
+		statementType="CALLABLE">
+		{call comercial.paClienteListaDatos(
+			#{nombresCliente, 		jdbcType=VARCHAR, mode=IN},
+			#{nroPage, 				jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilasPorPage, 	jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilas, 			jdbcType=INTEGER, mode=OUT},
+ 		    #{totalPages, 			jdbcType=INTEGER, mode=OUT}, 
+			#{resultado, 			jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 				jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+
+	<resultMap id="eliminarClienteMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarClienteResponse">
+
+	</resultMap>
+
+	<select id="eliminarCliente" timeout="180"
+		resultMap="eliminarClienteMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ClienteRequest"
+		statementType="CALLABLE">
+		{call comercial.paClienteElimina
+		(
+			#{idcliente , 		jdbcType=INTEGER, mode=IN},
+			#{idusuario , 		jdbcType=INTEGER, mode=IN},
+			#{resultado, 		jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 			jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+
+
+	<resultMap id="procesaClienteMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaClienteResponse">
+
+	</resultMap>
+
+	<select id="procesaCliente" timeout="180"
+		resultMap="procesaClienteMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ClienteRequest"
+		statementType="CALLABLE">
+		{call comercial.paClienteProcesa
+		(
+			#{tipoAccion, 		jdbcType=INTEGER, mode=IN},
+			#{idcliente, 		jdbcType=INTEGER, mode=IN},
+			#{idpersona, 		jdbcType=INTEGER, mode=IN},
+			#{idTipoDocumentoCliente, jdbcType=INTEGER, mode=IN},
+			#{nroDocumentoCliente, jdbcType=VARCHAR, mode=IN},
+			#{apellidoPaternoCliente, jdbcType=VARCHAR, mode=IN},
+			#{apellidoMaternoCliente, jdbcType=VARCHAR, mode=IN},
+			#{nombresCliente, 	jdbcType=VARCHAR, mode=IN},
+			#{nombreempresa, 	jdbcType=VARCHAR, mode=IN},
+			#{direccionCliente, jdbcType=VARCHAR, mode=IN},
+			#{telefonoCliente, jdbcType=VARCHAR, mode=IN},
+			#{emailCliente, 	jdbcType=VARCHAR, mode=IN},
+			#{sexoCliente, 		jdbcType=INTEGER, mode=IN},
+			#{ruc, 				jdbcType=VARCHAR, mode=IN},
+			#{observacion, 		jdbcType=VARCHAR, mode=IN},
+			#{idusuario, 		jdbcType=INTEGER, mode=IN},
+			#{resultado, 		jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 			jdbcType=VARCHAR, mode=OUT}
+
+		)
+		}
+	</select>
+
+	<resultMap id="listarClienteGrupoMapeo"
+		type="com.pe.app.backoffice.model.response.ListarClienteGrupoResponse">
+	</resultMap>
+
+	<select id="listarClienteGrupo" timeout="60"
+		resultMap="listarClienteGrupoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ClienteGrupoRequest"
+		statementType="CALLABLE">
+		{call comercial.paClienteGrupoListaDatos(
+			#{nombre, jdbcType=VARCHAR, mode=IN},
+			#{nroPage, jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilasPorPage, jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilas, jdbcType=INTEGER, mode=OUT},
+ 		    #{totalPages, jdbcType=INTEGER, mode=OUT}, 
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+
+	<resultMap id="eliminarClienteGrupoMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarClienteGrupoResponse">
+
+	</resultMap>
+
+	<select id="eliminarClienteGrupo" timeout="180"
+		resultMap="eliminarClienteGrupoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ClienteGrupoRequest"
+		statementType="CALLABLE">
+		{call comercial.paClienteGrupoElimina
+		(
+			#{idclientegrupo , jdbcType=INTEGER, mode=IN},
+			#{idusuario , jdbcType=INTEGER, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+
+	<resultMap id="procesaClienteGrupoMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaClienteGrupoResponse">
+
+	</resultMap>
+
+	<select id="procesaClienteGrupo" timeout="180"
+		resultMap="procesaClienteGrupoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ClienteGrupoRequest"
+		statementType="CALLABLE">
+		{call comercial.paClienteGrupoProcesa
+		(
+			#{tipoAccion, jdbcType=INTEGER, mode=IN},
+			#{idclientegrupo, jdbcType=INTEGER, mode=IN},
+			#{nombre, jdbcType=VARCHAR, mode=IN},
+			#{idusuario, jdbcType=INTEGER, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+
+		)
+		}
+	</select>
+	
+	<resultMap id="listarClienteGrupoDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.ListarClienteGrupoDetalleResponse">
+	</resultMap>
+
+	<select id="listarClienteGrupoDetalle" timeout="60"
+		resultMap="listarClienteGrupoDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ClienteGrupoDetalleRequest"
+		statementType="CALLABLE">
+		{call comercial.paClienteGrupoDetalleListaDatos(
+			#{idclientegrupo, jdbcType=INTEGER, mode=IN},
+			#{cliente, jdbcType=VARCHAR, mode=IN},
+			#{nroPage, jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilasPorPage, jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilas, jdbcType=INTEGER, mode=OUT},
+ 		    #{totalPages, jdbcType=INTEGER, mode=OUT}, 
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+
+	<resultMap id="eliminarClienteGrupoDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarClienteGrupoDetalleResponse">
+
+	</resultMap>
+
+	<select id="eliminarClienteGrupoDetalle" timeout="180"
+		resultMap="eliminarClienteGrupoDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ClienteGrupoDetalleRequest"
+		statementType="CALLABLE">
+		{call comercial.paClienteGrupoDetalleElimina
+		(
+			#{idclientegrupodet , jdbcType=INTEGER, mode=IN},
+			#{idusuario , jdbcType=INTEGER, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+
+	<resultMap id="procesaClienteGrupoDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaClienteGrupoDetalleResponse">
+
+	</resultMap>
+
+	<select id="procesaClienteGrupoDetalle" timeout="180"
+		resultMap="procesaClienteGrupoDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ClienteGrupoDetalleRequest"
+		statementType="CALLABLE">
+		{call comercial.paClienteGrupoDetalleProcesa
+		(
+			#{idclientegrupo, jdbcType=INTEGER, mode=IN},
+			#{idcliente, jdbcType=INTEGER, mode=IN},
+			#{idusuario, jdbcType=INTEGER, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+
+		)
+		}
+	</select>
+</mapper>

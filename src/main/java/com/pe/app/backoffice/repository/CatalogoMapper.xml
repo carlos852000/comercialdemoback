@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.pe.app.backoffice.repository.CatalogoMapper">
+
+	<resultMap id="verificarCatalogoMapeo"
+		type="com.pe.app.backoffice.model.response.VerificaCatalogoResponse">
+	</resultMap>
+
+	<select id="verificarCatalogo" timeout="60"
+		resultMap="verificarCatalogoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CatalogoRequest"
+		statementType="CALLABLE">
+		{call general.paCatalogoVerifica(
+		#{abreviatura , 	jdbcType=VARCHAR, mode=IN},
+		#{resultado, 		jdbcType=INTEGER, mode=OUT},
+		#{mensaje, 			jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+
+	<resultMap id="verificarCatalogoDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.VerificaCatalogoResponse">
+	</resultMap>
+
+	<select id="verificarCatalogoDetalle" timeout="60"
+		resultMap="verificarCatalogoDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CatalogoRequest"
+		statementType="CALLABLE">
+		{call general.paCatalogoDetalleVerifica(
+		#{idcatalogo , 		jdbcType=INTEGER, mode=IN},
+		#{abreviatura , 	jdbcType=VARCHAR, mode=IN},
+		#{resultado, 		jdbcType=INTEGER, mode=OUT},
+		#{mensaje, 			jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+
+	<resultMap id="listarCatalogoMapeo"
+		type="com.pe.app.backoffice.model.response.ListarCatalogoResponse">
+	</resultMap>
+
+	<select id="listarCatalogo" timeout="60"
+		resultMap="listarCatalogoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CatalogoRequest"
+		statementType="CALLABLE">
+		{call general.paCatalogoListaDatos(
+		#{abreviatura, 		jdbcType=VARCHAR, mode=IN},
+		#{idcatalogopadre, 	jdbcType=INTEGER,mode=IN},
+		#{resultado, 		jdbcType=INTEGER, mode=OUT},
+		#{mensaje,			jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+
+	<resultMap id="listarCatalogoDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.ListarCatalogoResponse">
+	</resultMap>
+
+	<select id="listarCatalogoDetalle" timeout="60"
+		resultMap="listarCatalogoDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CatalogoDetalleRequest"
+		statementType="CALLABLE">
+		{call general.paCatalogoDetalleListaDatos(
+		#{descripcion, 		jdbcType=VARCHAR, mode=IN},
+		#{idcatalogo, 		jdbcType=INTEGER, mode=IN},
+		#{tipo, 			jdbcType=INTEGER, mode=IN},
+		#{nroPage, 			jdbcType=INTEGER, mode=IN},
+		#{totalFilasPorPage, jdbcType=INTEGER, mode=IN},
+		#{totalFilas, 		jdbcType=INTEGER, mode=OUT},
+		#{totalPages, 		jdbcType=INTEGER, mode=OUT},
+		#{resultado, 		jdbcType=INTEGER, mode=OUT},
+		#{mensaje, 			jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+
+	<resultMap id="eliminarCatalogoMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarCatalogoResponse">
+
+	</resultMap>
+
+	<select id="eliminarCatalogo" timeout="180"
+		resultMap="eliminarCatalogoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CatalogoRequest"
+		statementType="CALLABLE">
+		{call general.paCatalogoElimina
+		(
+		#{idcatalogo, 	jdbcType=INTEGER, mode=IN},
+		#{idusuariosistema , jdbcType=INTEGER, 	mode=IN},
+		#{resultado, 	jdbcType=INTEGER, mode=OUT},
+		#{mensaje, 		jdbcType=VARCHAR, mode=OUT}
+
+		)
+		}
+	</select>
+
+
+	<resultMap id="procesaCatalogoMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaCatalogoResponse">
+
+	</resultMap>
+
+	<select id="procesaCatalogo" timeout="180"
+		resultMap="procesaCatalogoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CatalogoRequest"
+		statementType="CALLABLE">
+		{call general.paCatalogoProcesa
+		(
+		#{tipoaccion, 			jdbcType=INTEGER, mode=IN},
+		#{idcatalogo, 			jdbcType=INTEGER, mode=IN},
+		#{idcatalogopadre , 	jdbcType=INTEGER, mode=IN},
+		#{indicadormodificable, jdbcType=INTEGER, mode=IN},
+		#{abreviatura, 			jdbcType=VARCHAR, mode=IN},
+		#{descripcion, 			jdbcType=VARCHAR, mode=IN},
+		#{idUsuarioAuditoria, 	jdbcType=INTEGER, mode=IN},
+		#{resultado , 			jdbcType=INTEGER, mode=OUT},
+		#{mensaje ,				jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+
+
+	<resultMap id="eliminarCatalogoDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarCatalogoDetalleResponse">
+
+	</resultMap>
+
+	<select id="eliminarCatalogoDetalle" timeout="180"
+		resultMap="eliminarCatalogoDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CatalogoRequest"
+		statementType="CALLABLE">
+		{call general.paCatalogoDetalleElimina
+		(
+		#{idcatalogodetalle , 	jdbcType=INTEGER, mode=IN},
+		#{idusuario , 			jdbcType=INTEGER, mode=IN},
+		#{resultado, 			jdbcType=INTEGER, mode=OUT},
+		#{mensaje, 				jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+
+
+	<resultMap id="procesaCatalogoDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaCatalogoDetalleResponse">
+
+	</resultMap>
+
+	<select id="procesaCatalogoDetalle" timeout="180"
+		resultMap="procesaCatalogoDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CatalogoRequest"
+		statementType="CALLABLE">
+		{call general.paCatalogoDetalleProcesa
+		(
+		#{tipoaccion , 			jdbcType=INTEGER, mode=IN},
+		#{idcatalogodetalle , 	jdbcType=INTEGER, mode=IN},
+		#{idcatalogo , 			jdbcType=INTEGER, mode=IN},
+		#{descripcion , 		jdbcType=VARCHAR, mode=IN},
+		#{abreviatura , 		jdbcType=VARCHAR, mode=IN},
+		#{idusuario , 			jdbcType=INTEGER, mode=IN},
+		#{resultado , 			jdbcType=INTEGER, mode=OUT},
+		#{mensaje , 			jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+</mapper>

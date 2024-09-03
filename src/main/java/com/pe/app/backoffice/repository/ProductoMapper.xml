@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.pe.app.backoffice.repository.ProductoMapper">
+
+	<resultMap id="listarProductoMapeo"
+		type="com.pe.app.backoffice.model.response.ListarProductoResponse">
+	</resultMap>
+
+	<select id="listarProducto" timeout="60"
+		resultMap="listarProductoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProductoRequest"
+		statementType="CALLABLE">
+		{call comercial.paProductoListaDatos(
+			#{nombre, 				jdbcType=VARCHAR, mode=IN},
+			#{codigobarra, 			jdbcType=VARCHAR, mode=IN},
+			#{nroPage, 				jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilasPorPage, 	jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilas, 			jdbcType=INTEGER, mode=OUT},
+ 		    #{totalPages, 			jdbcType=INTEGER, mode=OUT}, 
+			#{resultado, 			jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 				jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+	<resultMap id="verificarProductoxIdMapeo"
+		type="com.pe.app.backoffice.model.response.VerificarProductoxIdResponse">
+	</resultMap>
+	
+	<select id="verificarProductoxId" timeout="60"
+		resultMap="verificarProductoxIdMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProductoRequest"
+		statementType="CALLABLE">
+		{call comercial.paProductoVerificaxId(
+			#{idproducto, 			jdbcType=INTEGER, mode=IN},
+			#{resultado, 			jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 				jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+	<resultMap id="eliminarProductoMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarProductoResponse">
+
+	</resultMap>
+
+	<select id="eliminarProducto" timeout="180"
+		resultMap="eliminarProductoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProductoRequest"
+		statementType="CALLABLE">
+		{call comercial.paProductoElimina
+		(
+			#{idproducto , 		jdbcType=INTEGER, mode=IN},
+			#{idusuario , 		jdbcType=INTEGER, mode=IN},
+			#{resultado, 		jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 			jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+
+	<resultMap id="procesaProductoMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaProductoResponse">
+	</resultMap>
+
+	<select id="procesaProducto" timeout="180"
+		resultMap="procesaProductoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProductoRequest"
+		statementType="CALLABLE">
+		{call comercial.paProductoProcesa
+		(
+			#{tipoAccion, 			jdbcType=INTEGER, mode=IN},
+			#{idproducto, 			jdbcType=INTEGER, mode=IN},
+			#{nombre, 				jdbcType=VARCHAR, mode=IN},
+			#{codigointerno, 		jdbcType=VARCHAR, mode=IN},
+			#{codigobarra, 			jdbcType=VARCHAR, mode=IN},
+			#{idproveedor, 			jdbcType=INTEGER, mode=IN},
+			#{idmarca, 				jdbcType=INTEGER, mode=IN},
+			#{margenutilidad, 		jdbcType=DECIMAL, mode=IN},
+			#{igv, 					jdbcType=INTEGER, mode=IN},
+			#{cantidad, 			jdbcType=INTEGER, mode=IN},
+			#{idunidadmedida, 		jdbcType=INTEGER, mode=IN},
+			#{cantidadminparacompra, jdbcType=INTEGER, mode=IN},
+			#{activoparacompra, 	jdbcType=INTEGER, mode=IN},
+			#{cantidadminparaventa, jdbcType=INTEGER, mode=IN},
+			#{activoparaventa, 		jdbcType=INTEGER, mode=IN},
+			#{desagrega, 			jdbcType=INTEGER, mode=IN},
+			#{edades, 				jdbcType=VARCHAR, mode=IN},
+			#{modelo, 				jdbcType=VARCHAR, mode=IN},
+			#{familia, 				jdbcType=VARCHAR, mode=IN},
+			#{genero, 				jdbcType=VARCHAR, mode=IN},
+			#{idusuario, 			jdbcType=INTEGER, mode=IN},
+			#{codigo, 				jdbcType=INTEGER, mode=OUT},
+			#{resultado, 			jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 				jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+
+	<resultMap id="procesaProductoPrecioMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaProductoResponse">
+	</resultMap>
+
+	<select id="procesaProductoPrecio" timeout="180"
+		resultMap="procesaProductoPrecioMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProductoRequest"
+		statementType="CALLABLE">
+		{call comercial.paProductoPrecioProcesa
+		(
+			#{idproducto, jdbcType=INTEGER, mode=IN},
+			#{preciocosto, jdbcType=DECIMAL, mode=IN},
+			#{margenutilidad, jdbcType=DECIMAL, mode=IN},
+			#{preciosinimp, jdbcType=DECIMAL, mode=IN},
+			#{igv, jdbcType=INTEGER, mode=IN},
+			#{preciofinal, jdbcType=DECIMAL, mode=IN},
+			#{preciounitario, jdbcType=DECIMAL, mode=IN},
+			#{idunidadmedida, jdbcType=INTEGER, mode=IN},
+			#{redondeo, jdbcType=INTEGER, mode=IN},
+			#{idusuario, jdbcType=INTEGER, mode=IN},
+			#{codigo, jdbcType=INTEGER, mode=OUT},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="listarProductoGrupoPrecioMapeo"
+		type="com.pe.app.backoffice.model.response.ListarProductosGrupoPrecioResponse">
+	</resultMap>
+
+	<select id="listarProductoGrupoPrecio" timeout="60"
+		resultMap="listarProductoGrupoPrecioMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProductoGrupoPrecioRequest"
+		statementType="CALLABLE">
+		{call comercial.paProductoGrupoPrecioListaDatos(
+			#{idproducto, jdbcType=INTEGER, mode=IN},
+			#{nombre, jdbcType=VARCHAR, mode=IN},
+			#{nroPage, jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilasPorPage, jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilas, jdbcType=INTEGER, mode=OUT},
+ 		    #{totalPages, jdbcType=INTEGER, mode=OUT}, 
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+	<resultMap id="procesaProductoGrupoPrecioMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaProductoGrupoPrecioResponse">
+	</resultMap>
+
+	<select id="procesaProductoGrupoPrecio" timeout="180"
+		resultMap="procesaProductoGrupoPrecioMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProductoGrupoPrecioRequest"
+		statementType="CALLABLE">
+		{call comercial.paProductoGrupoPrecioProcesa
+		(
+			#{tipoaccion, jdbcType=INTEGER, mode=IN},
+			#{idproductogrupoprecio, jdbcType=INTEGER, mode=IN},
+			#{idproducto, jdbcType=INTEGER, mode=IN},
+			#{nombre, jdbcType=VARCHAR, mode=IN},
+			#{tipoaplicacion, jdbcType=INTEGER, mode=IN},
+			#{idclientegrupo, jdbcType=INTEGER, mode=IN},
+			#{ilimitado, jdbcType=INTEGER, mode=IN},
+			#{fechainicio, jdbcType=DATE, mode=IN},
+			#{fechafin, jdbcType=DATE, mode=IN},
+			#{tipocantidad, jdbcType=INTEGER, mode=IN},
+			#{cantidad, jdbcType=INTEGER, mode=IN},
+			#{tipodcto, jdbcType=INTEGER, mode=IN},
+			#{descuento, jdbcType=DECIMAL, mode=IN},
+			#{idusuario, jdbcType=INTEGER, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="eliminarProductoGrupoPrecioMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarProductoGrupoPrecioResponse">
+
+	</resultMap>
+
+	<select id="eliminarProductoGrupoPrecio" timeout="180"
+		resultMap="eliminarProductoGrupoPrecioMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProductoGrupoPrecioRequest"
+		statementType="CALLABLE">
+		{call comercial.paProductoGrupoPrecioElimina
+		(
+			#{idproductogrupoprecio , jdbcType=INTEGER, mode=IN},
+			#{idusuario , jdbcType=INTEGER, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="listarProductoCaracteristicaMapeo"
+		type="com.pe.app.backoffice.model.response.ListarProductosCaracteristicaResponse">
+	</resultMap>
+
+	<select id="listarProductoCaracteristica" timeout="60"
+		resultMap="listarProductoCaracteristicaMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProductoCaracteristicaRequest"
+		statementType="CALLABLE">
+		{call comercial.paProductoCaracteristicaListaDatos(
+			#{abreviatura, jdbcType=VARCHAR, mode=IN},
+			#{idproducto, jdbcType=INTEGER, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+
+	<resultMap id="procesaProductoDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaProductoDetalleResponse">
+	</resultMap>
+
+	<select id="procesaProductoDetalle" timeout="180"
+		resultMap="procesaProductoDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProductoDetalleRequest"
+		statementType="CALLABLE">
+		{call comercial.paProductoDetalleProcesa
+		(
+			#{tipoaccion, jdbcType=INTEGER, mode=IN},
+			#{idproductodetalle, jdbcType=INTEGER, mode=IN},
+			#{idproducto, jdbcType=INTEGER, mode=IN},
+			#{nombre, jdbcType=VARCHAR, mode=IN},
+			#{idusuario, jdbcType=INTEGER, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="eliminarProductoDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarProductoDetalleResponse">
+
+	</resultMap>
+
+	<select id="eliminarProductoDetalle" timeout="180"
+		resultMap="eliminarProductoDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProductoDetalleRequest"
+		statementType="CALLABLE">
+		{call comercial.paProductoDetalleElimina
+		(
+			#{idproductodetalle , jdbcType=INTEGER, mode=IN},
+			#{idusuario , jdbcType=INTEGER, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="listarProductoDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.ListarProductosDetalleResponse">
+	</resultMap>
+
+	<select id="listarProductoDetalle" timeout="60"
+		resultMap="listarProductoDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProductoDetalleRequest"
+		statementType="CALLABLE">
+		{call comercial.paProductoDetalleListaDatos(
+			#{nombre, jdbcType=VARCHAR, mode=IN},
+			#{idproducto, jdbcType=INTEGER, mode=IN},
+			#{nroPage, jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilasPorPage, jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilas, jdbcType=INTEGER, mode=OUT},
+ 		    #{totalPages, jdbcType=INTEGER, mode=OUT}, 
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+	<resultMap id="listarProductoHistorialPrecioMapeo"
+		type="com.pe.app.backoffice.model.response.ListarProductosHistorialPrecioResponse">
+	</resultMap>
+
+	<select id="listarProductoHistorialPrecio" timeout="60"
+		resultMap="listarProductoHistorialPrecioMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProductoRequest"
+		statementType="CALLABLE">
+		{call comercial.paProductoHistorialPreciosListar(
+			#{idproducto, jdbcType=INTEGER, mode=IN},
+			#{resultado, jdbcType=INTEGER, mode=OUT},
+			#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+</mapper>

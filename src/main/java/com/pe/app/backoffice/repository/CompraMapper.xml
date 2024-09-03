@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.pe.app.backoffice.repository.CompraMapper">
+
+	<resultMap id="listarCompraMapeo"
+		type="com.pe.app.backoffice.model.response.ListarCompraResponse">
+	</resultMap>
+
+	<select id="listarCompra" timeout="60"
+		resultMap="listarCompraMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CompraRequest"
+		statementType="CALLABLE">
+		{call comercial.paCompraListaDatos(
+			#{proveedor, 		jdbcType=VARCHAR, mode=IN}, 
+			#{idcompra, 		jdbcType=INTEGER, mode=IN}, 
+			#{nroPage, 			jdbcType=INTEGER, mode=IN},
+		    #{totalFilasPorPage, jdbcType=INTEGER, mode=IN},
+		    #{totalFilas, 		jdbcType=INTEGER, mode=OUT},
+		    #{totalPages, 		jdbcType=INTEGER, mode=OUT},  
+		    #{resultado, 		jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, 			jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="verificarCompraxIdMapeo"
+		type="com.pe.app.backoffice.model.response.VerificarCompraxIdResponse">
+	</resultMap>
+	
+	<select id="verificarCompraxId" timeout="60"
+		resultMap="verificarCompraxIdMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CompraRequest"
+		statementType="CALLABLE">
+		{call comercial.paCompraVerificaxId(
+			#{idcompra, 		jdbcType=INTEGER, mode=IN},
+			#{resultado, 		jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 			jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+
+	<resultMap id="verificarCompraxIdUsuarioMapeo"
+		type="com.pe.app.backoffice.model.response.VerificarCompraxIdResponse">
+	</resultMap>
+	
+	<select id="verificarCompraxIdUsuario" timeout="60"
+		resultMap="verificarCompraxIdUsuarioMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CompraRequest"
+		statementType="CALLABLE">
+		{call comercial.paCompraVerificaxIdUsuario(
+			#{idusuario, 		jdbcType=INTEGER, mode=IN},
+			#{aprobacion, 		jdbcType=INTEGER, mode=IN},
+			#{resultado, 		jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 			jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+	<resultMap id="procesaPreCompraMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaCompraResponse">
+	</resultMap>
+
+	<select id="procesaPreCompra" timeout="180"
+		resultMap="procesaPreCompraMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CompraRequest"
+		statementType="CALLABLE">
+		{call comercial.paCompraPreProcesa
+		(
+			#{tipoAccion 			, jdbcType=INTEGER, mode=IN},
+			#{idcompra 				, jdbcType=INTEGER, mode=IN},
+			#{idproveedor 			, jdbcType=INTEGER, mode=IN},
+			#{idtienda 				, jdbcType=INTEGER, mode=IN},
+			#{fechacompra 			, jdbcType=DATE, mode=IN},
+			#{fechaentrega 			, jdbcType=DATE, mode=IN},
+			#{aprobacion 			, jdbcType=INTEGER, mode=IN},
+			#{idtipoemision			, jdbcType=INTEGER, mode=IN},
+			#{idusuario				, jdbcType=INTEGER, mode=IN},
+			#{codigo				, jdbcType=INTEGER, mode=OUT},
+			#{resultado				, jdbcType=INTEGER, mode=OUT},
+			#{mensaje				, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="procesaCompraMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaCompraResponse">
+	</resultMap>
+
+	<select id="procesaCompra" timeout="180"
+		resultMap="procesaCompraMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CompraRequest"
+		statementType="CALLABLE">
+		{call comercial.paCompraProcesa
+		(
+			#{tipoAccion 			, jdbcType=INTEGER, mode=IN},
+			#{idcompra 				, jdbcType=INTEGER, mode=IN},
+			#{idproveedor 			, jdbcType=INTEGER, mode=IN},
+			#{idtienda 				, jdbcType=INTEGER, mode=IN},
+			#{fechacompra 			, jdbcType=DATE, mode=IN},
+			#{fechaentrega 			, jdbcType=DATE, mode=IN},
+			#{aprobacion 			, jdbcType=INTEGER, mode=IN},
+			#{referencia 			, jdbcType=VARCHAR, mode=IN},
+			#{montosinigv 			, jdbcType=DECIMAL, mode=IN},
+			#{montoconigv 			, jdbcType=DECIMAL, mode=IN},
+			#{montototal 			, jdbcType=DECIMAL, mode=IN},
+			#{idtipoemision			, jdbcType=INTEGER, mode=IN},
+			#{numdocumento			, jdbcType=VARCHAR, mode=IN},
+			#{incluidoigv			, jdbcType=INTEGER, mode=IN},
+			#{idusuario				, jdbcType=INTEGER, mode=IN},
+			#{codigo				, jdbcType=INTEGER, mode=OUT},
+			#{resultado				, jdbcType=INTEGER, mode=OUT},
+			#{mensaje				, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="eliminarCompraMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarCompraResponse">
+	</resultMap>
+
+	<select id="eliminarCompra" timeout="180"
+		resultMap="eliminarCompraMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CompraRequest"
+		statementType="CALLABLE">
+		{call comercial.paCompraElimina
+		(
+			#{idcompra , 		jdbcType=INTEGER, mode=IN},
+			#{aprobacion , 		jdbcType=INTEGER, mode=IN},
+			#{idusuario , 		jdbcType=INTEGER, mode=IN},
+			#{resultado, 		jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 			jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+
+	<resultMap id="verificarCompraDetallexIdMapeo"
+		type="com.pe.app.backoffice.model.response.ListarCompraDetalleResponse">
+	</resultMap>
+	
+	<select id="verificarCompraDetallexId" timeout="60"
+		resultMap="verificarCompraDetallexIdMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CompraDetalleRequest"
+		statementType="CALLABLE">
+		{call comercial.paCompraDetalleVerificaxId(
+			#{idcompradetalle, 		jdbcType=INTEGER, mode=IN},
+			#{resultado, 			jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 				jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+	<resultMap id="listarCompraDetallexIdMapeo"
+		type="com.pe.app.backoffice.model.response.ListarCompraDetalleResponse">
+	</resultMap>
+	
+	<select id="listarCompraDetallexId" timeout="60"
+		resultMap="listarCompraDetallexIdMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CompraRequest"
+		statementType="CALLABLE">
+		{call comercial.paCompraDetalleListaDatosxId(
+			#{idcompra, 		jdbcType=INTEGER, mode=IN},
+			#{resultado, 		jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 			jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+	<resultMap id="procesaCompraDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaCompraResponse">
+	</resultMap>
+
+	<select id="procesaCompraDetalle" timeout="180"
+		resultMap="procesaCompraDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CompraDetalleRequest"
+		statementType="CALLABLE">
+		{call comercial.paCompraDetalleProcesa
+		(
+			#{tipoAccion 			, jdbcType=INTEGER, mode=IN},
+			#{idcompradetalle 		, jdbcType=INTEGER, mode=IN},
+			#{idcompra 				, jdbcType=INTEGER, mode=IN},
+			#{idproducto 			, jdbcType=INTEGER, mode=IN},
+			#{idproveedor 			, jdbcType=INTEGER, mode=IN},
+			#{idunidadmedida 		, jdbcType=INTEGER, mode=IN},
+			#{cantidad 				, jdbcType=INTEGER, mode=IN},
+			#{preciocosto 			, jdbcType=DECIMAL, mode=IN},
+			#{total 				, jdbcType=DECIMAL, mode=IN},
+			#{idusuario				, jdbcType=INTEGER, mode=IN},
+			#{resultado				, jdbcType=INTEGER, mode=OUT},
+			#{mensaje				, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="eliminarCompraDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarCompraResponse">
+	</resultMap>
+
+	<select id="eliminarCompraDetalle" timeout="180"
+		resultMap="eliminarCompraDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.CompraDetalleRequest"
+		statementType="CALLABLE">
+		{call comercial.paCompraDetalleElimina
+		(
+			#{idcompradetalle , jdbcType=INTEGER, mode=IN},
+			#{idusuario , 		jdbcType=INTEGER, mode=IN},
+			#{resultado, 		jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 			jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+</mapper>

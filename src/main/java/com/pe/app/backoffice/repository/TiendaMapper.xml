@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.pe.app.backoffice.repository.TiendaMapper">
+
+	<resultMap id="listarTiendaMapeo"
+		type="com.pe.app.backoffice.model.response.ListarTiendaResponse">
+	</resultMap>
+
+	<select id="listarTienda" timeout="60"
+		resultMap="listarTiendaMapeo"
+		parameterType="com.pe.app.backoffice.model.request.TiendaRequest"
+		statementType="CALLABLE">
+		{call general.paTiendaListaDatos(
+			#{nombre, jdbcType=VARCHAR, mode=IN}, 
+			#{nroPage, jdbcType=INTEGER, mode=IN},
+		    #{totalFilasPorPage, jdbcType=INTEGER, mode=IN},
+		    #{totalFilas, jdbcType=INTEGER, mode=OUT},
+		    #{totalPages, jdbcType=INTEGER, mode=OUT},  
+		    #{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+
+	<resultMap id="procesaTiendaMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaTiendaResponse">
+
+	</resultMap>
+
+	<select id="procesaTienda" timeout="180"
+		resultMap="procesaTiendaMapeo"
+		parameterType="com.pe.app.backoffice.model.request.TiendaRequest"
+		statementType="CALLABLE">
+		{call general.paTiendaProcesa
+		(
+			#{tipoAccion 			, jdbcType=INTEGER, mode=IN},
+			#{idtienda 				, jdbcType=INTEGER, mode=IN},
+			#{idtipo 				, jdbcType=INTEGER, mode=IN},
+			#{nombre 				, jdbcType=VARCHAR, mode=IN},
+			#{telefono 				, jdbcType=VARCHAR, mode=IN},
+			#{direccion 			, jdbcType=VARCHAR, mode=IN},
+			#{emailtienda 			, jdbcType=VARCHAR, mode=IN},
+			#{indicadorcentral 		, jdbcType=INTEGER, mode=IN},
+			#{idusuario				, jdbcType=INTEGER, mode=IN},
+			#{resultado				, jdbcType=INTEGER, mode=OUT},
+			#{mensaje				, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="eliminarTiendaMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarTiendaResponse">
+
+	</resultMap>
+
+	<select id="eliminarTienda" timeout="180"
+		resultMap="eliminarTiendaMapeo"
+		parameterType="com.pe.app.backoffice.model.request.TiendaRequest"
+		statementType="CALLABLE">
+		{call general.paTiendaElimina
+		(
+		#{idtienda , jdbcType=INTEGER, mode=IN},
+		#{idusuario , jdbcType=INTEGER, mode=IN},
+		#{resultado, jdbcType=INTEGER, mode=OUT},
+		#{mensaje, jdbcType=VARCHAR, mode=OUT}
+
+		)
+		}
+	</select>
+
+
+</mapper>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pe.app.backoffice.repository.UsuarioSistemaMapper">
+
+	<resultMap id="verificaPerfilMapeo"
+		type="com.pe.app.backoffice.model.response.ListaUsuarioPerfilResponse">
+	</resultMap>
+
+	<select id="verificarPerfil" timeout="60"
+		resultMap="verificaPerfilMapeo"
+		parameterType="com.pe.app.backoffice.model.request.UsuarioSistemaRequest"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioVerificaPerfil(
+			#{idusuario , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="obtieneMenuSistemaMapeo"
+		type="com.pe.app.backoffice.model.response.ListaMenuSistemaResponse">
+	</resultMap>
+
+	<select id="obtieneMenuSistema" timeout="60"
+		resultMap="obtieneMenuSistemaMapeo"
+		parameterType="com.pe.app.backoffice.model.request.UsuarioSistemaRequest"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioListaOpciones(
+			#{idperfil , jdbcType=INTEGER, mode=IN}, 
+			#{idopcionpadre , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="cambiaClaveMapeo"
+		type="com.pe.app.backoffice.model.response.CambioClaveResponse">
+	</resultMap>
+
+	<select id="cambiaClave" timeout="60"
+		resultMap="cambiaClaveMapeo"
+		parameterType="com.pe.app.backoffice.model.request.UsuarioSistemaRequest"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioCambiaClave(
+			#{idusuariosistema , jdbcType=INTEGER, mode=IN}, 
+			#{email , jdbcType=INTEGER, mode=IN}, 
+			#{nuevaclave , jdbcType=VARCHAR, mode=IN}, 
+			#{idusuario , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="verificarAccesoBotonMapeo"
+		type="com.pe.app.backoffice.model.response.VerificarPermisoFormularioResponse">
+	</resultMap>
+
+	<select id="verificarAccesoBoton" timeout="60"
+		resultMap="verificarAccesoBotonMapeo"
+		parameterType="com.pe.app.backoffice.model.request.VerificarAccesoBotonRequest"
+		statementType="CALLABLE">
+		{call seguridad.paAccesoBotonVerificaNom(
+			#{idacceso , jdbcType=INTEGER, mode=IN}, 
+			#{nombreboton , jdbcType=VARCHAR, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="verificarPermisosFormularioMapeo"
+		type="com.pe.app.backoffice.model.response.VerificarPermisoFormularioResponse">
+	</resultMap>
+
+	<select id="verificarPermisosFormulario" timeout="60"
+		resultMap="verificarPermisosFormularioMapeo"
+		parameterType="com.pe.app.backoffice.model.request.VerificaPermisosRequest"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioVerificaAccesoFormulario(
+			#{idusuario , jdbcType=INTEGER, mode=IN}, 
+			#{idperfil , jdbcType=INTEGER, mode=IN}, 
+			#{opcion , jdbcType=VARCHAR, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="verificarPermisosBotonMapeo"
+		type="com.pe.app.backoffice.model.response.VerificarAccesoBotonResponse">
+	</resultMap>
+
+	<select id="verificarPermisosBoton" timeout="60"
+		resultMap="verificarPermisosBotonMapeo"
+		parameterType="com.pe.app.backoffice.model.request.VerificaPermisosRequest"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioVerificaAccesoBoton(
+			#{idacceso , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="actualizaDatosUsuarioMapeo"
+		type="com.pe.app.backoffice.model.response.ActualizaDatosUsuarioResponse">
+	</resultMap>
+
+	<select id="actualizaDatosUsuario" timeout="60"
+		resultMap="actualizaDatosUsuarioMapeo"
+		parameterType="com.pe.app.backoffice.model.request.UsuarioSistemaRequest"
+		statementType="CALLABLE">
+		{call seguridad.paUsuarioActualizaDatos(
+			#{idusuario , jdbcType=INTEGER, mode=IN}, 
+			#{idpersona , jdbcType=INTEGER, mode=IN}, 
+			#{emailusuario, jdbcType=VARCHAR, mode=IN}, 
+			#{idusuario , jdbcType=INTEGER, mode=IN}, 
+       		#{resultado, jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+</mapper>

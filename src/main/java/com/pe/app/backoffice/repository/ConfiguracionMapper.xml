@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.pe.app.backoffice.repository.ConfiguracionMapper">
+
+	<resultMap id="verificarDatosMapeo"
+		type="com.pe.app.backoffice.model.response.VerificaConfiguracionResponse">
+	</resultMap>
+
+	<select id="verificarDatos" timeout="60"
+		resultMap="verificarDatosMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ConfiguracionRequest"
+		statementType="CALLABLE">
+		{call general.paConfiguracionObtieneDatos(
+			#{resultado, 		jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 			jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+	<resultMap id="procesaConfiguracion01Mapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaConfiguracionResponse">
+	</resultMap>
+
+	<select id="procesaConfiguracion01" timeout="180"
+		resultMap="procesaConfiguracion01Mapeo"
+		parameterType="com.pe.app.backoffice.model.request.ConfiguracionRequest"
+		statementType="CALLABLE">
+		{call general.paConfiguracionProcesa(
+			#{idconfiguracion 			, jdbcType=INTEGER, mode=IN},
+			#{empresa 					, jdbcType=VARCHAR, mode=IN},
+			#{direccion 				, jdbcType=VARCHAR, mode=IN},
+			#{ruc 						, jdbcType=VARCHAR, mode=IN},
+			#{telefono 					, jdbcType=VARCHAR, mode=IN},
+			#{igv 						, jdbcType=DECIMAL, mode=IN},
+			#{cambiodolar 				, jdbcType=DECIMAL, mode=IN},
+			#{indicadorfactelectronica 	, jdbcType=INTEGER, mode=IN},
+			#{idusuario					, jdbcType=INTEGER, mode=IN},
+			#{resultado					, jdbcType=INTEGER, mode=OUT},
+			#{mensaje					, jdbcType=VARCHAR, mode=OUT}
+			)
+		}
+	</select>
+	
+	<resultMap id="procesaConfiguracion02Mapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaConfiguracionResponse">
+	</resultMap>
+
+	<select id="procesaConfiguracion02" timeout="180"
+		resultMap="procesaConfiguracion02Mapeo"
+		parameterType="com.pe.app.backoffice.model.request.ConfiguracionRequest"
+		statementType="CALLABLE">
+		{call general.paConfiguracionProcesa02(
+			#{idconfiguracion 				, jdbcType=INTEGER, mode=IN},
+			#{idrubro 						, jdbcType=INTEGER, mode=IN},
+			#{codigoproductointerno 		, jdbcType=VARCHAR, mode=IN},
+			#{diasnovedad 					, jdbcType=INTEGER, mode=IN},
+			#{indicadordctsventas 			, jdbcType=INTEGER, mode=IN},
+			#{indicadorprecioporlocal 		, jdbcType=INTEGER, mode=IN},
+			#{indicadorprecioporgrupos 		, jdbcType=INTEGER, mode=IN},
+			#{gestionarstock 				, jdbcType=INTEGER, mode=IN},
+			#{indicadorenviarcorreocliente 	, jdbcType=INTEGER, mode=IN},
+			#{indicadordesagregarproducto 	, jdbcType=INTEGER, mode=IN},
+			#{nummostrarprodventas 			, jdbcType=INTEGER, mode=IN},
+			#{nummostrarprodcompras 		, jdbcType=INTEGER, mode=IN},
+			#{indicadoretiquetaprodsinstock , jdbcType=INTEGER, mode=IN},
+			#{etiquetaprodsinstock 			, jdbcType=VARCHAR, mode=IN},
+			#{indicadoretiquetaprodconstockmin 	, jdbcType=INTEGER, mode=IN},
+			#{etiquetaprodconstockmin 		, jdbcType=VARCHAR, mode=IN},
+			#{indicadoretiquetaprodconstock , jdbcType=INTEGER, mode=IN},
+			#{etiquetaprodconstock 			, jdbcType=VARCHAR, mode=IN},
+			#{idusuario						, jdbcType=INTEGER, mode=IN},
+			#{resultado						, jdbcType=INTEGER, mode=OUT},
+			#{mensaje						, jdbcType=VARCHAR, mode=OUT}
+			)
+		}
+	</select>
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.pe.app.backoffice.repository.ProveedorMapper">
+
+	<resultMap id="listarProveedorMapeo"
+		type="com.pe.app.backoffice.model.response.ListarProveedorResponse">
+	</resultMap>
+
+	<select id="listarProveedor" timeout="60"
+		resultMap="listarProveedorMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProveedorRequest"
+		statementType="CALLABLE">
+		{call comercial.paProveedorListaDatos(
+		#{representante, jdbcType=VARCHAR, mode=IN},
+		#{nroPage, jdbcType=INTEGER, mode=IN},
+		#{totalFilasPorPage, jdbcType=INTEGER, mode=IN},
+		#{totalFilas, jdbcType=INTEGER, mode=OUT},
+		#{totalPages, jdbcType=INTEGER, mode=OUT},
+		#{resultado, jdbcType=INTEGER, mode=OUT},
+		#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+
+	<resultMap id="procesaProveedorMapeo"
+		type="com.pe.app.backoffice.model.response.ProcesaProveedorResponse">
+
+	</resultMap>
+
+	<select id="procesaProveedor" timeout="180"
+		resultMap="procesaProveedorMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProveedorRequest"
+		statementType="CALLABLE">
+		{call comercial.paProveedorProcesa
+		(
+		#{tipoAccion , jdbcType=INTEGER, mode=IN},
+		#{idProveedor , jdbcType=INTEGER, mode=IN},
+		#{representante , jdbcType=VARCHAR, mode=IN},
+		#{ruc , jdbcType=VARCHAR, mode=IN},
+		#{direccionProveedor, jdbcType=VARCHAR, mode=IN},
+		#{telefonoProveedor , jdbcType=VARCHAR, mode=IN},
+		#{emailProveedor , jdbcType=VARCHAR, mode=IN},
+		#{webProveedor , jdbcType=VARCHAR, mode=IN},
+		#{idusuario , jdbcType=INTEGER, mode=IN},
+		#{resultado , jdbcType=INTEGER, mode=OUT},
+		#{mensaje , jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+
+	<resultMap id="eliminarProveedorMapeo"
+		type="com.pe.app.backoffice.model.response.EliminarProveedorResponse">
+
+	</resultMap>
+
+	<select id="eliminarProveedor" timeout="180"
+		resultMap="eliminarProveedorMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProveedorRequest"
+		statementType="CALLABLE">
+		{call comercial.paProveedorElimina
+		(
+		#{idProveedor , jdbcType=INTEGER, mode=IN},
+		#{idusuario , jdbcType=INTEGER, mode=IN},
+		#{resultado, jdbcType=INTEGER, mode=OUT},
+		#{mensaje, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+
+</mapper>

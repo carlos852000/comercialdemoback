@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.pe.app.backoffice.repository.MovimientoMapper">
+
+	<resultMap id="abrirCompraMapeo"
+		type="com.pe.app.transversal.model.response.DataResponseDB">
+	</resultMap>
+
+	<select id="abrirCompra" timeout="60"
+		resultMap="abrirCompraMapeo"
+		parameterType="com.pe.app.backoffice.model.request.MovimientoRequest"
+		statementType="CALLABLE">
+		{call comercial.paMovimientoBuscarCompra(
+			#{idtabla, 				jdbcType=INTEGER, mode=IN}, 
+			#{idtipomovimiento, 	jdbcType=INTEGER, mode=IN}, 
+			#{idestadomovimiento, 	jdbcType=INTEGER, mode=IN}, 
+			#{idestadomovimiento_secundario, jdbcType=INTEGER, mode=IN}, 
+			#{idusuario, 			jdbcType=INTEGER, mode=IN},
+			#{codigo, 				jdbcType=INTEGER, mode=OUT},
+		    #{resultado, 			jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, 				jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="verificarMovimientoxIdMapeo"
+		type="com.pe.app.backoffice.model.response.ListarMovimientoResponse">
+	</resultMap>
+
+	<select id="verificarMovimientoxId" timeout="60"
+		resultMap="verificarMovimientoxIdMapeo"
+		parameterType="com.pe.app.backoffice.model.request.MovimientoRequest"
+		statementType="CALLABLE">
+		{call comercial.paMovimientoVerificaxId(
+			#{idmovimiento, 		jdbcType=INTEGER, mode=IN}, 
+		    #{resultado, 			jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, 				jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="verificarMovimientoxIdUsuarioMapeo"
+		type="com.pe.app.backoffice.model.response.ListarMovimientoResponse">
+	</resultMap>
+
+	<select id="verificarMovimientoxIdUsuario" timeout="60"
+		resultMap="verificarMovimientoxIdUsuarioMapeo"
+		parameterType="com.pe.app.backoffice.model.request.MovimientoRequest"
+		statementType="CALLABLE">
+		{call comercial.paMovimientoVerificaxIdUsuario(
+			#{idusuario, 			jdbcType=INTEGER, mode=IN},
+			#{idestadomovimiento, 	jdbcType=INTEGER, mode=IN},
+			#{idtipomovimiento, 		jdbcType=INTEGER, mode=IN},
+		    #{resultado, 			jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, 				jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="listarMovimientosMapeo"
+		type="com.pe.app.backoffice.model.response.ListarMovimientoResponse">
+	</resultMap>
+	
+	<select id="listarMovimientos" timeout="60"
+		resultMap="listarMovimientosMapeo"
+		parameterType="com.pe.app.backoffice.model.request.MovimientoRequest"
+		statementType="CALLABLE">
+		{call comercial.paMovimientoListaDatos(
+			#{nomProveedor, 			jdbcType=VARCHAR, mode=IN},
+			#{idmovimiento, 			jdbcType=INTEGER, mode=IN},
+			#{idtabla, 					jdbcType=INTEGER, mode=IN},
+			#{idtipomovimiento, 		jdbcType=INTEGER, mode=IN},
+			#{nroPage, 					jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilasPorPage, 		jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilas, 				jdbcType=INTEGER, mode=OUT},
+ 		    #{totalPages, 				jdbcType=INTEGER, mode=OUT}, 
+			#{resultado, 				jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 					jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+
+	<resultMap id="procesaPreMovimientoMapeo"
+		type="com.pe.app.transversal.model.response.DataResponseDB">
+	</resultMap>
+	
+	<select id="procesaPreMovimiento" timeout="60"
+		resultMap="procesaPreMovimientoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.MovimientoRequest"
+		statementType="CALLABLE">
+		{call comercial.paMovimientoPreProcesa(
+			#{tipoAccion, 			jdbcType=INTEGER, mode=IN},
+			#{idmovimiento, 		jdbcType=INTEGER, mode=IN},
+			#{idtiendausuario, 		jdbcType=INTEGER, mode=IN},
+			#{idtienda, 			jdbcType=INTEGER, mode=IN},
+			#{idtipomovimiento, 	jdbcType=INTEGER, mode=IN},
+			#{idestadomovimiento, 	jdbcType=INTEGER, mode=IN},
+			#{idusuario, 			jdbcType=INTEGER, mode=IN},
+			#{codigo, 				jdbcType=INTEGER, mode=OUT},
+			#{resultado, 			jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 				jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+	<resultMap id="procesaMovimientoMapeo"
+		type="com.pe.app.transversal.model.response.DataResponseDB">
+	</resultMap>
+	
+	<select id="procesaMovimiento" timeout="60"
+		resultMap="procesaMovimientoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.MovimientoRequest"
+		statementType="CALLABLE">
+		{call comercial.paMovimientoProcesa(
+			#{tipoAccion, 			jdbcType=INTEGER, mode=IN},
+			#{idmovimiento, 		jdbcType=INTEGER, mode=IN},
+			#{idproveedor, 			jdbcType=INTEGER, mode=IN},
+			#{idtienda, 			jdbcType=INTEGER, mode=IN},
+			#{idtipodocumento, 		jdbcType=INTEGER, mode=IN},
+			#{numdocumento, 		jdbcType=VARCHAR, mode=IN},
+			#{idestadomovimiento, 	jdbcType=INTEGER, mode=IN},
+			#{montosinigv, 			jdbcType=FLOAT, mode=IN},
+			#{montoconigv, 			jdbcType=FLOAT, mode=IN},
+			#{montototal, 			jdbcType=FLOAT, mode=IN},
+			#{referenciamovimiento, jdbcType=VARCHAR, mode=IN},
+			#{concepto, 			jdbcType=VARCHAR, mode=IN},
+			#{idusuario, 			jdbcType=INTEGER, mode=IN},
+			#{codigo, 				jdbcType=INTEGER, mode=OUT},
+			#{resultado, 			jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 				jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+	<resultMap id="eliminaMovimientoMapeo"
+		type="com.pe.app.transversal.model.response.DataResponseDB">
+	</resultMap>
+	
+	<select id="eliminaMovimiento" timeout="60"
+		resultMap="eliminaMovimientoMapeo"
+		parameterType="com.pe.app.backoffice.model.request.MovimientoRequest"
+		statementType="CALLABLE">
+		{call comercial.paMovimientoElimina(
+			#{idmovimiento, 			jdbcType=INTEGER, mode=IN},
+			#{idestadomovimiento, 		jdbcType=INTEGER, mode=IN},
+			#{idusuario, 				jdbcType=INTEGER, mode=IN},
+			#{resultado, 				jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 					jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+	<resultMap id="listarMovimientosDetalleMapeo"
+		type="com.pe.app.backoffice.model.response.ListarMovimientoDetalleResponse">
+	</resultMap>
+
+	<select id="listarMovimientosDetalle" timeout="180"
+		resultMap="listarMovimientosDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.MovimientoDetalleRequest"
+		statementType="CALLABLE">
+		{call comercial.paMovimientoDetalleListaDatosxId
+		(
+			#{idmovimiento , 			jdbcType=INTEGER, mode=IN},
+			#{resultado, 				jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 					jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="verificarMovimientosDetallexIdMapeo"
+		type="com.pe.app.backoffice.model.response.ListarMovimientoDetalleResponse">
+	</resultMap>
+
+	<select id="verificarMovimientosDetallexId" timeout="60"
+		resultMap="verificarMovimientosDetallexIdMapeo"
+		parameterType="com.pe.app.backoffice.model.request.MovimientoDetalleRequest"
+		statementType="CALLABLE">
+		{call comercial.paMovimientoDetalleVerificaxId(
+			#{idmovimientodetalle, 		jdbcType=INTEGER, mode=IN}, 
+		    #{resultado, 				jdbcType=INTEGER, mode=OUT},
+       		#{mensaje, 					jdbcType=VARCHAR, mode=OUT} 
+		)}
+	</select>
+	
+	<resultMap id="procesaMovimientoDetalleMapeo"
+		type="com.pe.app.transversal.model.response.DataResponseDB">
+	</resultMap>
+
+	<select id="procesaMovimientoDetalle" timeout="180"
+		resultMap="procesaMovimientoDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.MovimientoDetalleRequest"
+		statementType="CALLABLE">
+		{call comercial.paMovimientoDetalleProcesa
+		(
+			#{tipoAccion 			, jdbcType=INTEGER, mode=IN},
+			#{idmovimientodetalle 	, jdbcType=INTEGER, mode=IN},
+			#{idmovimiento 			, jdbcType=INTEGER, mode=IN},
+			#{idproducto 			, jdbcType=INTEGER, mode=IN},
+			#{idproveedor 			, jdbcType=INTEGER, mode=IN},
+			#{idunidadmedida 		, jdbcType=INTEGER, mode=IN},
+			#{cantidad 				, jdbcType=INTEGER, mode=IN},
+			#{preciocosto 			, jdbcType=FLOAT, mode=IN},
+			#{vistobueno 			, jdbcType=INTEGER, mode=IN},
+			#{total 				, jdbcType=FLOAT, mode=IN},
+			#{idusuario				, jdbcType=INTEGER, mode=IN},
+			#{resultado				, jdbcType=INTEGER, mode=OUT},
+			#{mensaje				, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="eliminaMovimientoDetalleMapeo"
+		type="com.pe.app.transversal.model.response.DataResponseDB">
+	</resultMap>
+
+	<select id="eliminaMovimientoDetalle" timeout="180"
+		resultMap="eliminaMovimientoDetalleMapeo"
+		parameterType="com.pe.app.backoffice.model.request.MovimientoDetalleRequest"
+		statementType="CALLABLE">
+		{call comercial.paMovimientoDetalleElimina
+		(
+			#{idmovimientodetalle	, jdbcType=INTEGER, mode=IN},
+			#{idusuario				, jdbcType=INTEGER, mode=IN},
+			#{resultado				, jdbcType=INTEGER, mode=OUT},
+			#{mensaje				, jdbcType=VARCHAR, mode=OUT}
+		)
+		}
+	</select>
+	
+	<resultMap id="listarKardexMapeo"
+		type="com.pe.app.backoffice.model.response.ListarKardexResponse">
+	</resultMap>
+
+	<select id="listarKardex" timeout="60"
+		resultMap="listarKardexMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProductoRequest"
+		statementType="CALLABLE">
+		{call comercial.paKardexListaDatos(
+			#{idproducto, 				jdbcType=INTEGER, mode=IN}, 
+			#{nroPage, 					jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilasPorPage, 		jdbcType=INTEGER, mode=IN},
+ 		    #{totalFilas, 				jdbcType=INTEGER, mode=OUT},
+ 		    #{totalPages, 				jdbcType=INTEGER, mode=OUT}, 
+			#{resultado, 				jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 					jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+	<resultMap id="listarKardexTiendasxMapeo"
+		type="com.pe.app.backoffice.model.response.ListarKardexTiendasResponse">
+	</resultMap>
+
+	<select id="listarKardexTiendas" timeout="60"
+		resultMap="listarKardexTiendasxMapeo"
+		parameterType="com.pe.app.backoffice.model.request.ProductoRequest"
+		statementType="CALLABLE">
+		{call comercial.paKardexTiendaListaDatos(
+			#{idproducto, 				jdbcType=INTEGER, mode=IN}, 
+			#{resultado, 				jdbcType=INTEGER, mode=OUT},
+			#{mensaje, 					jdbcType=VARCHAR, mode=OUT}
+		)}
+	</select>
+	
+</mapper>
